@@ -72,15 +72,14 @@ func (a *Address) String() string {
 	return fmt.Sprintf("%s (lat: %3.7f, lng: %3.7f)", a.Address, a.Lat, a.Lng)
 }
 
-func Geocode(q string) (*Address, error) {
-	return fetch("https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=" + url.QueryEscape(strings.TrimSpace(q)))
+func Geocode(q, key string) (*Address, error) {
+	return fetch("https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=" + url.QueryEscape(strings.TrimSpace(q)) + "&key=" + key)
 }
-func ReverseGeocode(ll string) (*Address, error) {
-	return fetch("https://maps.googleapis.com/maps/api/geocode/json?sensor=false&latlng=" + url.QueryEscape(strings.TrimSpace(ll)))
+func ReverseGeocode(ll, key string) (*Address, error) {
+	return fetch("https://maps.googleapis.com/maps/api/geocode/json?sensor=false&latlng=" + url.QueryEscape(strings.TrimSpace(ll)) + "&key=" + key)
 }
 
 func fetch(url string) (*Address, error) {
-
 	resp, err := http.Get(url)
 	if err != nil {
 		return nil, RemoteServerError
